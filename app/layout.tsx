@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 export const metadata: Metadata = {
   title: '歴史と文化の散歩道 | 東京散歩地図 - NAZOARUKI',
@@ -27,8 +28,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className="font-noto antialiased bg-gray-50 text-gray-900">
-        {children}
+      <body className="font-japanese antialiased bg-washi-50 text-sumi-900 transition-colors duration-300">
+        <ThemeProvider defaultMode="light" defaultSeasonalVariant="spring">
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

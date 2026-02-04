@@ -4,13 +4,98 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
 
+/* 日本伝統デザインシステム CSS変数 / Japanese Traditional Design System CSS Variables */
+:root {
+  /* デフォルトテーマ変数 / Default theme variables */
+  --color-sumi-50: #f8f9fa;
+  --color-sumi-100: #e9ecef;
+  --color-sumi-200: #dee2e6;
+  --color-sumi-300: #ced4da;
+  --color-sumi-400: #6c757d;
+  --color-sumi-500: #495057;
+  --color-sumi-600: #343a40;
+  --color-sumi-700: #212529;
+  --color-sumi-800: #1a1d20;
+  --color-sumi-900: #0d0f11;
+  
+  --color-washi-50: #fefefe;
+  --color-washi-100: #fdfdfd;
+  --color-washi-200: #fbfbfb;
+  --color-washi-300: #f8f8f8;
+  --color-washi-400: #f5f5f5;
+  --color-washi-500: #f2f2f2;
+  --color-washi-600: #e8e8e8;
+  --color-washi-700: #d4d4d4;
+  --color-washi-800: #a3a3a3;
+  --color-washi-900: #737373;
+  
+  /* タイポグラフィ変数 / Typography variables */
+  --font-japanese: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  --font-latin: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  --line-height-japanese: 1.7;
+  --line-height-latin: 1.6;
+  --letter-spacing-japanese: 0.05em;
+  --letter-spacing-latin: 0.025em;
+  
+  /* 間隔変数 / Spacing variables */
+  --spacing-tatami: 1.618rem;
+  --spacing-shaku: 1rem;
+  --spacing-sun: 0.1rem;
+  
+  /* アニメーション変数 / Animation variables */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+}
+
+/* ダークテーマ / Dark theme */
+.theme-dark {
+  --color-washi-50: #0f172a;
+  --color-washi-100: #1e293b;
+  --color-washi-200: #334155;
+  --color-washi-300: #475569;
+  --color-washi-400: #64748b;
+  --color-washi-500: #94a3b8;
+  --color-washi-600: #cbd5e1;
+  --color-washi-700: #e2e8f0;
+  --color-washi-800: #f1f5f9;
+  --color-washi-900: #f8fafc;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
   }
   
   body {
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: var(--font-japanese);
+    line-height: var(--line-height-japanese);
+    letter-spacing: var(--letter-spacing-japanese);
+  }
+  
+  /* 日本語フォント適用 / Apply Japanese font */
+  .font-japanese {
+    font-family: var(--font-japanese);
+    line-height: var(--line-height-japanese);
+    letter-spacing: var(--letter-spacing-japanese);
+  }
+  
+  /* ラテン文字フォント適用 / Apply Latin font */
+  .font-latin {
+    font-family: var(--font-latin);
+    line-height: var(--line-height-latin);
+    letter-spacing: var(--letter-spacing-latin);
+  }
+  
+  /* モーション軽減設定の尊重 / Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
@@ -31,6 +116,47 @@
     background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
   }
   
+  /* 日本伝統グラデーション / Japanese traditional gradients */
+  .gradient-sumi {
+    background: linear-gradient(135deg, var(--color-sumi-600) 0%, var(--color-sumi-800) 100%);
+  }
+  
+  .gradient-sakura {
+    background: linear-gradient(135deg, #f18ba0 0%, #e85d7a 100%);
+  }
+  
+  .gradient-bamboo {
+    background: linear-gradient(135deg, #8fd18f 0%, #5cb85c 100%);
+  }
+  
+  .gradient-sunset {
+    background: linear-gradient(135deg, #fdba74 0%, #f97316 100%);
+  }
+  
+  /* 和紙テクスチャ / Washi texture */
+  .washi-texture {
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 50%);
+    background-size: 20px 20px, 30px 30px;
+  }
+  
+  /* 墨筆ストローク効果 / Ink brush stroke effect */
+  .ink-stroke {
+    position: relative;
+  }
+  
+  .ink-stroke::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--color-sumi-600) 20%, var(--color-sumi-600) 80%, transparent 100%);
+    opacity: 0.6;
+  }
+  
   .card-hover {
     @apply transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-xl;
   }
@@ -39,7 +165,28 @@
     @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium text-white transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg;
   }
   
+  /* 日本伝統ボタンスタイル / Japanese traditional button styles */
+  .btn-traditional {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-lg font-japanese font-medium transition-all duration-300;
+    @apply bg-washi-100 text-sumi-800 border border-sumi-300;
+    @apply hover:bg-sakura-50 hover:border-sakura-300 hover:text-sakura-700;
+    @apply focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500;
+  }
+  
   .section-padding {
     @apply py-16 md:py-24;
+  }
+  
+  /* 日本伝統アニメーション / Japanese traditional animations */
+  .animate-ink-spread {
+    animation: inkSpread var(--duration-slow) cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  
+  .animate-paper-fold {
+    animation: paperFold 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+  
+  .animate-brush-stroke {
+    animation: brushStroke 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
   }
 }
